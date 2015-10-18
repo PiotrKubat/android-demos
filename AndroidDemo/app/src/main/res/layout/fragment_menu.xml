@@ -1,0 +1,35 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.kubat.piotr.androiddemo.MenuFragment">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <Button
+            android:id="@+id/button_calc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/calculator"
+            android:text="@string/kalkulator"/>
+        <Button
+            android:id="@+id/button_calc2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/calculator_scientific"
+            android:text="@string/kalkulator_naukowy"/>
+        <Button
+            android:id="@+id/button_about"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/information"
+            android:text="@string/about"/>
+        <Button
+            android:id="@+id/button_close"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/close"/>
+    </LinearLayout>
+
+</FrameLayout>
