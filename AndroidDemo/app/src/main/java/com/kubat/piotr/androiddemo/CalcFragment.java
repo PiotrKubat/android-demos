@@ -12,13 +12,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalcFragment extends Fragment {
+public class CalcFragment extends Fragment implements View.OnClickListener {
 
     private TextView resultView = null;
-
-    private List<Button> digitButtons = null;
-
-    private View.OnClickListener digitClicked = null;
 
     private double _result = 0;
 
@@ -32,23 +28,27 @@ public class CalcFragment extends Fragment {
 
         resultView = (TextView) view.findViewById(R.id.resultView);
 
-        digitButtons = new ArrayList<Button>();
-
-        digitClicked = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SetError(view.getTag().toString());
-            }
-        };
-
+        Button btn = null;
         for(int i = 0; i < 10; i++) {
-            int id = getResources().getIdentifier("button_"+i, "id", packageName);
-            Button btn = (Button)view.findViewById(id);
-            btn.setTag(i);
-            btn.setOnClickListener(digitClicked);
+            int button_id = getResources().getIdentifier("button_"+i, "id", packageName);
+            initializeButton(view, button_id);
         }
 
+        initializeButton(view, R.id.button_back);
+        initializeButton(view, R.id.button_plus);
+        initializeButton(view, R.id.button_minus);
+        initializeButton(view, R.id.button_mul);
+        initializeButton(view, R.id.button_div);
+        initializeButton(view, R.id.button_dot);
+        initializeButton(view, R.id.button_);
+
         return view;
+    }
+
+    private void initializeButton(View view, int button_id) {
+        Button btn;
+        btn = (Button)view.findViewById(button_id);
+        btn.setOnClickListener(this);
     }
 
     // Działa dla starszych wersji androida
@@ -74,29 +74,21 @@ public class CalcFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    public void onClick(View view) {
 
+        if(mCallback == null) return;
 
-    public void digitClicked(View view) {
         Button btn = (Button)view;
-        String str_dig = btn.getText().toString();
-        SetError(str_dig);
+        String token = btn.getText().toString();
+        String result = mCallback.getResult(token);
+        setResult(result);
     }
 
-    public void operClicked(View view) {
-        Button btn = (Button)view;
-
-    }
-
-
-    private void SetResult(double result) {
-        resultView.setText(String.valueOf(result));
-    }
-
-    private void SetError(String error) {
-        resultView.setText(error);
+    private void setResult(String result) {
+        resultView.setText(result);
     }
 
     public interface OnCalcListener {
-
+        String getResult(String token);
     }
 }

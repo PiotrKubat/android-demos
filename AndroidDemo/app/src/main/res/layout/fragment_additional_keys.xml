@@ -1,0 +1,41 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kubat.piotr.androiddemo.AdditionalKeysFragment"
+    android:stretchColumns="*">
+    <TableRow>
+        <Button
+            android:id="@+id/btn_sinus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="sin"
+            android:textSize="30dp"
+            />
+        <Button
+            android:id="@+id/btn_cosinus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="cos"
+            android:textSize="30dp"
+            />
+    </TableRow>
+    <TableRow>
+        <Button
+            android:id="@+id/btn_tangens"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="tg"
+            android:textSize="30dp"
+            />
+        <Button
+            android:id="@+id/btn_contangens"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="ctg"
+            android:textSize="30dp"
+            />
+
+
+    </TableRow>
+
+</TableLayout>
