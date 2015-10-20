@@ -1,3 +1,3 @@
 # android-demos
 
-programy demostracyjne na androida
+programy demonstracyjne na androida
