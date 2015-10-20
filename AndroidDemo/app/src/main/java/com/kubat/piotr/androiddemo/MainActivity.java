@@ -29,76 +29,66 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnMe
         MenuFragment newFragment = new MenuFragment();
         changeFragment(newFragment, false);
 
+
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
+    // obsługa przycisku cofania
     @Override
     public void onBackPressed() {
         if(fragmentManager.getBackStackEntryCount() != 0) {
             fragmentManager.popBackStack();
+            setActionBarTitle(R.string.app_name);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         } else {
             super.onBackPressed();
         }
+    }
+
+    // Obsługa menu
+
+    private void setActionBarTitle(int id) {
+        getSupportActionBar().setTitle(id);
     }
 
     public void onCalcClicked() {
         clearCalc();
         CalcFragment newFragment = new CalcFragment();
         changeFragment(newFragment, true);
-    }
-
-    private void clearCalc() {
-        _display = "0";
-        _memory = 0;
-        _lastOperator = "";
-        _clearDisplay = false;
+        setActionBarTitle(R.string.title_activity_calc);
     }
 
     public void onCalcSClicked() {
         clearCalc();
         CalcScienceFragment newFragment = new CalcScienceFragment();
         changeFragment(newFragment, true);
+        setActionBarTitle(R.string.title_activity_calc_s);
     }
 
     public void onAboutClicked() {
         AboutFragment newFragment = new AboutFragment();
         changeFragment(newFragment, true);
-    }
-
-    private void changeFragment(Fragment fragment, boolean isAddToBackStack) {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_container, fragment);
-        if(isAddToBackStack)
-            transaction.addToBackStack(null);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.commit();
+        setActionBarTitle(R.string.title_activity_about);
     }
 
     public void onCloseClicked() {
         this.finish();
         System.exit(0);
+    }
+
+    // podmiana fragmenu w activity
+    private void changeFragment(Fragment fragment, boolean isAddToBackStack) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.main_container, fragment);
+        if(isAddToBackStack) {
+
+            transaction.addToBackStack(null);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.commit();
     }
 
     @Override
@@ -119,6 +109,11 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnMe
         }
     }
 
+    // koniec obsługi menu
+
+
+    //obsługa kalkulatora
+
     private String _lastOperator = "";
 
     private boolean _clearDisplay = false;
@@ -126,6 +121,13 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnMe
     private double _memory = 0;
 
     private String _display = "0";
+
+    private void clearCalc() {
+        _display = "0";
+        _memory = 0;
+        _lastOperator = "";
+        _clearDisplay = false;
+    }
 
     @Override
     public String getResult(String token) {
@@ -186,13 +188,11 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnMe
     }
 
     private boolean isDigit(String token) {
-        if(token == null || token.length() > 1) return false;
-        return Character.isDigit(token.charAt(0)) || token.equals(".");
+        return !(token == null || token.length() > 1) && (Character.isDigit(token.charAt(0)) || token.equals("."));
     }
 
     private boolean isOperator(String token) {
-        if(token == null || token.length() > 1) return false;
-        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+        return !(token == null || token.length() > 1) && (token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/"));
     }
 
     private String appendDigit(String _display, String str_digit) {
@@ -213,4 +213,6 @@ public class MainActivity extends AppCompatActivity implements MenuFragment.OnMe
         }
         return _display;
     }
+
+    // koniec obsługi kalkulatora
 }

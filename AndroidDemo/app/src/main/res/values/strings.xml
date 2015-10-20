@@ -7,8 +7,7 @@
     <string name="about">O programie</string>
     <string name="close">Zamknij</string>
     <string name="title_activity_calc">Kalkulator</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_calc_s">Kalkulator naukowy</string>
     <string name="title_activity_about">O programie</string>
     <string name="author">Piotr Kubat</string>
 

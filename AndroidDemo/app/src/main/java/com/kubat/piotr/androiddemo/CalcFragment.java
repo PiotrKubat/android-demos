@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -45,13 +46,25 @@ public class CalcFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void initializeButton(View view, int button_id) {
         Button btn;
         btn = (Button)view.findViewById(button_id);
         btn.setOnClickListener(this);
     }
 
-    // Działa dla starszych wersji androida
+    // Działa dla starszych wersji
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
