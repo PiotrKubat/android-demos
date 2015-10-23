@@ -37,5 +37,48 @@
 
 
     </TableRow>
+    <TableRow>
+        <Button
+            android:id="@+id/btn_pow2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="x^2"
+            android:textSize="30dp"
+            />
+        <Button
+            android:id="@+id/btn_powy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="x^y"
+            android:textSize="30dp"
+            />
+
+
+    </TableRow>
+    <TableRow>
+    <Button
+        android:id="@+id/btn_log"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="log"
+        android:textSize="30dp"
+        />
+    <Button
+        android:id="@+id/btn_ln"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="ln"
+        android:textSize="30dp"
+        />
+    </TableRow>
+    <TableRow>
+        <Button
+            android:id="@+id/btn_silnia"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="x!"
+            android:textSize="30dp"
+            />
+    </TableRow>
 
 </TableLayout>

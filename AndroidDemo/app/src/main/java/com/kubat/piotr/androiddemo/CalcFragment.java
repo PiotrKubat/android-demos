@@ -70,15 +70,15 @@ public class CalcFragment extends Fragment implements View.OnClickListener {
 
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
-        if(activity instanceof MenuFragment.OnMenuListener) {
+        if(activity instanceof OnCalcListener) {
             mCallback = (OnCalcListener) activity;
-
             packageName = activity.getPackageName();
 
         } else {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnMenuListener");
+                    + " must implement OnCalcListener");
         }
+
     }
 
     @Override

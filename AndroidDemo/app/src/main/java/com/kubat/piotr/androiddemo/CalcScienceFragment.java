@@ -1,6 +1,7 @@
 package com.kubat.piotr.androiddemo;
 
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -14,7 +15,7 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CalcScienceFragment extends Fragment {
+public class CalcScienceFragment extends CalcFragment {
 
 
     private FragmentManager fragmentManager = null;
