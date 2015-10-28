@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.kubat.piotr.pogodynka.SelectCityFragment">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label"
+        android:textSize="25dp"
+        android:layout_gravity="center"
+        android:padding="@dimen/default_padding"/>
+    <ListView
+        android:id="@+id/list_of_cities"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </ListView>
+
+</LinearLayout>
