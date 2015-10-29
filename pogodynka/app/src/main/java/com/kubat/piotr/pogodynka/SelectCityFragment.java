@@ -1,6 +1,7 @@
 package com.kubat.piotr.pogodynka;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.kubat.piotr.pogodynka.ccc.CCCFactory;
+import com.kubat.piotr.pogodynka.ccc.City;
 import com.kubat.piotr.pogodynka.ccc.Continent;
+import com.kubat.piotr.pogodynka.ccc.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,8 @@ import java.util.List;
 public class SelectCityFragment extends Fragment {
 
     private ListView listView = null;
+
+    private OnCitySelectedListener onCitySelectedListener = null;
 
     public SelectCityFragment() {
         // Required empty public constructor
@@ -37,6 +42,16 @@ public class SelectCityFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof OnCitySelectedListener) {
+            onCitySelectedListener = (OnCitySelectedListener)activity;
+        } else {
+            throw new ClassCastException("OnCitySelectedListener interface required");
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -47,6 +62,20 @@ public class SelectCityFragment extends Fragment {
             e.printStackTrace();
         }
 
-        listView.setAdapter(new MultiLevelAdapter(items, this.getActivity()));
+        MultiLevelAdapter adapter = new MultiLevelAdapter(this.getActivity(), items);
+
+        adapter.setOnModelClicked(new MultiLevelAdapter.OnModelClickedListener() {
+            @Override
+            public void onModelClicked(Model model) {
+                onCitySelectedListener.onCitySelected((City)model);
+            }
+        });
+
+        listView.setAdapter(adapter);
+    }
+
+    public interface OnCitySelectedListener {
+
+        void onCitySelected(City city);
     }
 }

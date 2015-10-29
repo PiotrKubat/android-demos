@@ -29,11 +29,7 @@ public class MultiLevelAdapter extends BaseAdapter {
 
     private LayoutInflater layoutInflater;
 
-    public MultiLevelAdapter() {
-        super();
-    }
-
-    public MultiLevelAdapter(Continent[] list, Context context) {
+    public MultiLevelAdapter(Context context, Continent[] list) {
         super();
         _contentList = new ArrayList<Model>();
         _contentList.addAll(Arrays.asList(list));
@@ -95,51 +91,72 @@ public class MultiLevelAdapter extends BaseAdapter {
                 vh.txt_info.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_expand_more_white_24dp, 0, 0, 0);
             }
         }
-        vh.txt_info.setClickable(true);
-        vh.txt_info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(item instanceof Continent) {
-                    Continent c = (Continent) item;
-                    if(!c.isExpanded()) {
-                        for (int it = 0; it < c.getCountries().length; it++) {
-                            _contentList.add(i + it + 1, c.getCountries()[it]);
-                        }
-                        c.setExpanded(true);
-                    } else {
-                        for (int it = 0; it < c.getCountries().length; it++) {
-                            Country ct = (Country) c.getCountries()[it];
-                            if(ct.isExpanded()) {
-                                for (int itc = 0; itc < ct.getCities().length; itc++) {
-
-                                    _contentList.remove(ct.getCities()[itc]);
-                                }
-                                ct.setExpanded(false);
+        if(item instanceof ExpandableModel) {
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (item instanceof Continent) {
+                        Continent c = (Continent) item;
+                        if (!c.isExpanded()) {
+                            for (int it = 0; it < c.getCountries().length; it++) {
+                                _contentList.add(i + it + 1, c.getCountries()[it]);
                             }
-                            _contentList.remove(ct);
-                        }
-                        c.setExpanded(false);
-                    }
-                    notifyDataSetChanged();
-                } else if(item instanceof Country) {
-                    Country c = (Country) item;
-                    if(!c.isExpanded()) {
-                        for (int it = 0; it < c.getCities().length; it++) {
-                            _contentList.add(i + it + 1, c.getCities()[it]);
-                        }
-                        c.setExpanded(true);
-                    } else {
-                        for (int it = 0; it < c.getCities().length; it++) {
-                            _contentList.remove(i + 1);
-                        }
-                        c.setExpanded(false);
-                    }
-                    notifyDataSetChanged();
-                }
-            }
-        });
+                            c.setExpanded(true);
+                        } else {
+                            for (int it = 0; it < c.getCountries().length; it++) {
+                                Country ct = (Country) c.getCountries()[it];
+                                if (ct.isExpanded()) {
+                                    for (int itc = 0; itc < ct.getCities().length; itc++) {
 
+                                        _contentList.remove(ct.getCities()[itc]);
+                                    }
+                                    ct.setExpanded(false);
+                                }
+                                _contentList.remove(ct);
+                            }
+                            c.setExpanded(false);
+                        }
+                        notifyDataSetChanged();
+                    } else if (item instanceof Country) {
+                        Country c = (Country) item;
+                        if (!c.isExpanded()) {
+                            for (int it = 0; it < c.getCities().length; it++) {
+                                _contentList.add(i + it + 1, c.getCities()[it]);
+                            }
+                            c.setExpanded(true);
+                        } else {
+                            for (int it = 0; it < c.getCities().length; it++) {
+                                _contentList.remove(i + 1);
+                            }
+                            c.setExpanded(false);
+                        }
+                        notifyDataSetChanged();
+                    }
+                }
+            });
+        } else if(item instanceof Model) {
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(onModelClickedListener != null) {
+                        onModelClickedListener.onModelClicked((Model) item);
+                    }
+                }
+            });
+        }
         return convertView;
+    }
+
+    private OnModelClickedListener onModelClickedListener;
+
+    public void setOnModelClicked(OnModelClickedListener onModelClickedListener) {
+        this.onModelClickedListener = onModelClickedListener;
+    }
+
+    public interface OnModelClickedListener {
+
+        void onModelClicked(Model model);
+
     }
 
     static class ViewHolder {
