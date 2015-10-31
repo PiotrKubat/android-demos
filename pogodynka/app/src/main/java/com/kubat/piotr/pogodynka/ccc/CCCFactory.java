@@ -49,11 +49,14 @@ public class CCCFactory {
                     JSONObject cObj = cArray.getJSONObject(j);
                     String c_name = cObj.getString("name");
                     JSONArray ctArray = cObj.getJSONArray("cities");
-                    String[] cities = null;
+                    City[] cities = null;
                     if(ctArray != null && ctArray.length() > 0) {
-                        cities = new String[ctArray.length()];
+                        cities = new City[ctArray.length()];
                         for (int k = 0; k < ctArray.length(); k++) {
-                            cities[k] = ctArray.getString(k);
+                            JSONObject ctObj = ctArray.getJSONObject(k);
+                            String id = ctObj.getString("id");
+                            String ct_name = ctObj.getString("name");
+                            cities[k] = getCity(id, ct_name);
                         }
                     }
                     countries[j] = getCountry(c_name, cities);
@@ -62,30 +65,14 @@ public class CCCFactory {
             continents[i] = new Continent(name, countries);
         }
 
-//        Country c1 = getCountry("Polska", new String[]{"Warszawa", "Łódź", "Gdańsk"});
-//        Country c2 = getCountry("Niemcy", new String[]{"Berlin", "Hamburg"});
-//
-//        continents[0] = new Continent("Europa", new Country[]{c1, c2});
-//
-//        c1 = getCountry("Japonia", new String[]{"Tokyo", "Yokohama", "Kyoto"});
-//        c2 = getCountry("Chiny", new String[]{"Pekin", "Szanghaj"});
-//
-//        continents[1] = new Continent("Azja", new Country[]{c1, c2});
-
         return continents;
     }
 
-    public static Country getCountry(final String countryName, final String[] cityNames) {
-
-        City[] cities = new City[cityNames.length];
-        for(int i = 0; i < cityNames.length; i++) {
-            cities[i] = getCity(cityNames[i]);
-        }
-
+    public static Country getCountry(final String countryName, final City[] cities) {
         return new Country(countryName, cities);
     }
 
-    public static City getCity(final String name) {
-        return new City(name);
+    public static City getCity(final String id, final String name) {
+        return new City(id, name);
     }
 }

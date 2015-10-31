@@ -1,64 +1,163 @@
-[
-  {
+[{
     "name" : "Europa",
-    "countries" :
-    [
+    "countries" : [
       {
         "name" : "Polska",
-        "cities" : ["Warszawa", "Łódź", "Poznań", "Gdańsk", "Kraków", "Wrocław"]
+        "cities" : [
+          {"id":"756135", "name":"Warszawa"},
+          {"id":"3093133", "name":"Łódź"},
+          {"id":"3088171", "name":"Poznań"},
+          {"id":"3099434", "name":"Gdańsk"},
+          {"id":"3094802", "name":"Kraków"},
+          {"id":"3081368", "name":"Wrocław"},
+          {"id":"3083829", "name":"Szczecin"}]
       },
       {
         "name" : "Niemcy",
-        "cities" : ["Berlin", "Hamburg", "Lipsk", "Frankfurt"]
+        "cities" : [
+          {"id":"2950159", "name":"Berlin"},
+          {"id":"2911298", "name":"Hamburg"},
+          {"id":"2867714", "name":"Monachium"},
+          {"id":"2946447", "name":"Bonn"}]
       },
       {
         "name" : "Francja",
-        "cities" : ["Paryż", "Marsylia"]
+        "cities" : [
+          {"id":"2988507", "name":"Paryż"},
+          {"id":"2995469", "name":"Marsylia"},
+          {"id":"2996944", "name":"Lyon"}]
       },
       {
         "name" : "Hiszpania",
-        "cities" : ["Madryt", "Barcelona", "Walencja"]
+        "cities" : [
+          {"id":"3117735", "name":"Madryt"},
+          {"id":"3128760", "name":"Barcelona"},
+          {"id":"2510911", "name":"Sevilla"}]
       }
     ]
   },
   {
     "name" : "Azja",
-    "countries" :
-    [
+    "countries" : [
       {
         "name" : "Japonia",
-        "cities" : ["Tokyo", "Yokohama", "Kyoto", "Nagoya", "Sapporo", "Osaka"]
+        "cities" : [
+          {"id":"1850147", "name":"Tokyo"},
+          {"id":"1848354", "name":"Yokohama"},
+          {"id":"1857910", "name":"Kyoto"},
+          {"id":"1856057", "name":"Nagoya"},
+          {"id":"2128295", "name":"Sapporo"},
+          {"id":"1853909", "name":"Osaka"}]
       },
       {
         "name" : "Chiny",
-        "cities" : ["Pekin", "Szanghaj", "Nankin"]
+        "cities" : [
+          {"id":"1816670", "name":"Pekin"},
+          {"id":"1796236", "name":"Szanghaj"},
+          {"id":"1814087", "name":"Dalian"},
+          {"id":"1788852", "name":"Xining"}]
       },
       {
         "name" : "Indie",
-        "cities" : ["New Delhi", "Bombaj"]
+        "cities" : [
+          {"id":"1273294", "name":"New Delhi"},
+          {"id":"1275339", "name":"Bombaj"},
+          {"id":"1277333", "name":"Bengaluru"}]
       },
       {
         "name" : "Singapur",
-        "cities" : ["Singapur"]
-      }
-    ]
+        "cities" : [
+          {"id":"1880252", "name":"Singapur"}]
+      },
+      {
+        "name" : "Arabia Saudyjska",
+        "cities" : [
+          {"id":"108410", "name":"Riyadh"}]
+      }]
   },
   {
     "name" : "Ameryka Północna",
-    "countries" :
-    [
+    "countries" : [
       {
         "name" : "USA",
-        "cities" : ["Waszyngton", "Nowy Jork", "Chicago", "Los Angeles", "Huston", "Las Vegas"]
+        "cities" : [
+          {"id":"4140963", "name":"Waszyngton"},
+          {"id":"5128581", "name":"Nowy Jork"},
+          {"id":"4887398", "name":"Chicago"},
+          {"id":"5368361", "name":"Los Angeles"},
+          {"id":"4699066", "name":"Houston"},
+          {"id":"5506956", "name":"Las Vegas"},
+          {"id":"5856195", "name":"Honolulu"}]
       },
       {
         "name" : "Kanada",
-        "cities" : ["Ottawa", "Torronto"]
+        "cities" : [
+          {"id":"6094817", "name":"Ottawa"},
+          {"id":"6167865", "name":"Torronto"}]
       },
       {
         "name" : "Meksyk",
-        "cities" : ["Meksyk"]
-      }
-    ]
+        "cities" : [
+          {"id":"3530597", "name":"Mexico City"},
+          {"id":"4014338", "name":"Chihuahua"},
+          {"id":"3523349", "name":"Merida"}]
+      }]
+  },
+  {
+    "name" : "Ameryka Południowa",
+    "countries" : [
+      {
+        "name" : "Brazylia",
+        "cities" : [
+          {"id":"3469058", "name":"Brasilia"},
+          {"id":"3451190", "name":"Rio de Janeiro"},
+          {"id":"3448439", "name":"Sao Paulo"}]
+      },
+      {
+        "name" : "Argentyna",
+        "cities" : [
+          {"id":"3435910", "name":"Buenos Aires"},
+          {"id":"3435261", "name":"Concordia"}]
+      },
+      {
+        "name" : "Wenezuela",
+        "cities" : [
+          {"id":"3646738", "name":"Caracas"}]
+      }]
+  },
+  {
+    "name" : "Afryka",
+    "countries" : [
+      {
+        "name" : "Egipt",
+        "cities" : [
+          {"id":"360630", "name":"Kair"},
+          {"id":"361058", "name":"Alexandria"},
+          {"id":"360502", "name":"Luxor"}]
+      },
+      {
+        "name" : "RPA",
+        "cities" : [
+          {"id":"993800", "name":"Johannesburg"},
+          {"id":"3369157", "name":"Cape Town"},
+          {"id":"1007311", "name":"Durban"}]
+      }]
+  },
+  {
+    "name" : "Australia i Oceania",
+    "countries" : [
+      {
+        "name" : "Australia",
+        "cities" : [
+          {"id":"2158177", "name":"Melbourne"},
+          {"id":"2147714", "name":"Sydney"},
+          {"id":"2174003", "name":"Brisbane"},
+          {"id":"2073124", "name":"Darwin"}]
+      },
+      {
+        "name" : "Wyspy Cooka",
+        "cities" : [
+          {"id":"4035715", "name":"Avarua"}]
+      }]
   }
 ]

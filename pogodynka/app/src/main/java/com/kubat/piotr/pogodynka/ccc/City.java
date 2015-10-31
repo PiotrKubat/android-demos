@@ -5,7 +5,14 @@ package com.kubat.piotr.pogodynka.ccc;
  */
 public class City extends Model{
 
-    public City(String name) {
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public City(String id, String name) {
         super(name);
+        this.id = id;
     }
 }
