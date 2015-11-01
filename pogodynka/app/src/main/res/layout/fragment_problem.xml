@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:orientation="vertical" tools:context="com.kubat.piotr.pogodynka.ProblemFragment">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:src="@android:drawable/ic_dialog_alert"/>
+    <TextView
+        android:id="@+id/problem_text"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:text=""
+        android:textColor="@color/c2"/>
+
+</LinearLayout>

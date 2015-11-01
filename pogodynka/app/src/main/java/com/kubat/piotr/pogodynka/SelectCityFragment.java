@@ -54,7 +54,6 @@ public class SelectCityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         Continent[] items = new Continent[0];
         try {
             items = CCCFactory.genData(this.getActivity());
@@ -72,6 +71,7 @@ public class SelectCityFragment extends Fragment {
         });
 
         listView.setAdapter(adapter);
+
     }
 
     public interface OnCitySelectedListener {

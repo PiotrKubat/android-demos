@@ -62,28 +62,12 @@ public class MainActivity extends AppCompatActivity implements SelectCityFragmen
     public void onCitySelected(City city) {
         if(city == null)
             throw new IllegalArgumentException("argument is null");
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            Fragment fragment = new WeatherFragment();
-            Bundle args = new Bundle();
-            args.putString("cityId", city.getId());
-            args.putString("cityName", city.getName());
-            fragment.setArguments(args);
-            changeFragment(fragment, true);
-        } else {
-            new AlertDialog.Builder(this)
-                    .setTitle("Connection problem")
-                    .setMessage("Brak połączenia")
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-        }
+        Fragment fragment = new WeatherFragment();
+        Bundle args = new Bundle();
+        args.putString("cityId", city.getId());
+        args.putString("cityName", city.getName());
+        fragment.setArguments(args);
+        changeFragment(fragment, true);
 
     }
 

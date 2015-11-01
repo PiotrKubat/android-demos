@@ -1,7 +1,14 @@
 package com.kubat.piotr.pogodynka;
 
 
+import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -27,17 +34,7 @@ public class WeatherFragment extends Fragment {
 
     private String cityName;
 
-    private TextView txtCity;
-    private TextView txtDesc;
-    private TextView txtTemp;
-    private TextView txtPress;
-    private WeatherIconView weatherIcon;
-
-    private TableLayout weatherTab;
-
-    private ProgressDialog progressDialog;
-
-    protected AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
+    FragmentManager fragmentManager;
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -49,20 +46,16 @@ public class WeatherFragment extends Fragment {
 
         View view = (View)inflater.inflate(R.layout.fragment_weather, container, false);
 
-        txtCity = (TextView)view.findViewById(R.id.city_name);
+        fragmentManager = getFragmentManager();
 
-        txtDesc = (TextView)view.findViewById(R.id.weather_desc);
-
-        txtTemp = (TextView)view.findViewById(R.id.weather_temp);
-
-        txtPress = (TextView)view.findViewById(R.id.weather_press);
-
-        weatherIcon = (WeatherIconView)view.findViewById(R.id.weather_icon);
-
-        weatherIcon.setIconColor(R.color.colorPrimary);
-
-        weatherTab = (TableLayout)view.findViewById(R.id.weather_tab);
         return view;
+    }
+
+    private void changeFragment(Fragment fragment) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.weather_content, fragment);
+        transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.commit();
     }
 
     @Override
@@ -76,11 +69,19 @@ public class WeatherFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Pobieranie informacji o pogodzie");
-        progressDialog.show();
-        GetWeatherTask task = new GetWeatherTask();
-        task.execute(new String[]{cityId});
+        ConnectivityManager connMgr = (ConnectivityManager)
+                this.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            Fragment fragment = new ProgressFragment();
+            changeFragment(fragment);
+            GetWeatherTask task = new GetWeatherTask();
+            task.execute(new String[]{cityId});
+        } else {
+            showProblem("Brak połączenia z internetem");
+        }
+
+
     }
 
     @Override
@@ -100,66 +101,7 @@ public class WeatherFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    private void showWeatherConditions(Weather weather) {
-        if(weather == null) return;
-        txtCity.setText(cityName);
-        txtDesc.setText(weather.getDescription());
-        txtTemp.setText(weather.getTemperature() + "\u2103");
-        txtPress.setText(weather.getPressure() + "hPa");
-        weatherIcon.setIconResource(getWeatherIcon(weather.getIconCode()));
-        txtCity.startAnimation(fadeIn);
-        txtDesc.startAnimation(fadeIn);
-        weatherIcon.startAnimation(fadeIn);
-        weatherTab.startAnimation(fadeIn);
 
-        fadeIn.setDuration(2400);
-        fadeIn.setFillAfter(true);
-
-        //fadeIn.start();
-    }
-
-    private String getWeatherIcon(String iconCode) {
-        int iconResCode = com.github.pwittchen.weathericonview.library.R.string.wi_alien;
-        if(iconCode == null) return getString(iconResCode);
-        boolean isDay = iconCode.endsWith("d");
-        String code = iconCode.substring(0, 2);
-        int codeVal = Integer.valueOf(code);
-
-        switch (codeVal) {
-            case 1:
-                iconResCode = isDay ? com.github.pwittchen.weathericonview.library.R.string.wi_day_sunny
-                        : com.github.pwittchen.weathericonview.library.R.string.wi_night_clear;
-                break;
-            case 2:
-                iconResCode = isDay ? com.github.pwittchen.weathericonview.library.R.string.wi_day_cloudy
-                        : com.github.pwittchen.weathericonview.library.R.string.wi_night_cloudy;
-                break;
-            case 3:
-                iconResCode = isDay ? com.github.pwittchen.weathericonview.library.R.string.wi_day_cloudy_high
-                        : com.github.pwittchen.weathericonview.library.R.string.wi_night_cloudy_high;
-                break;
-            case 4:
-                iconResCode = com.github.pwittchen.weathericonview.library.R.string.wi_cloudy;
-                break;
-            case 9:
-                iconResCode = com.github.pwittchen.weathericonview.library.R.string.wi_showers;
-                break;
-            case 10:
-                iconResCode = isDay ? com.github.pwittchen.weathericonview.library.R.string.wi_day_rain
-                        : com.github.pwittchen.weathericonview.library.R.string.wi_night_rain;
-                break;
-            case 11:
-                iconResCode = com.github.pwittchen.weathericonview.library.R.string.wi_thunderstorm;
-                break;
-            case 13:
-                iconResCode = com.github.pwittchen.weathericonview.library.R.string.wi_snow;
-                break;
-            case 50:
-                iconResCode = com.github.pwittchen.weathericonview.library.R.string.wi_fog;
-                break;
-        }
-        return getString(iconResCode);
-    }
 
     private class GetWeatherTask extends AsyncTask<String, Integer, Weather> {
         protected Weather doInBackground(String... cityIds) {
@@ -179,8 +121,35 @@ public class WeatherFragment extends Fragment {
         }
 
         protected void onPostExecute(Weather result) {
-            progressDialog.dismiss();
-            showWeatherConditions(result);
+            if(result != null) {
+                showWeatherConditions(result);
+            } else {
+                showProblem("Nie udało się pobrać informacji o pogodzie dla miasta " + cityName);
+            }
         }
+    }
+
+    private void showWeatherConditions(Weather result) {
+
+
+        Bundle args = new Bundle();
+        args.putString("cityName", cityName);
+        args.putString("description", result.getDescription());
+        args.putDouble("temperature", result.getTemperature());
+        args.putDouble("pressure", result.getPressure());
+        args.putString("iconCode", result.getIconCode());
+
+        Fragment fragment = new WeatherDetailsFragment();
+        fragment.setArguments(args);
+        changeFragment(fragment);
+    }
+
+    private void showProblem(String msg) {
+        Bundle args = new Bundle();
+        args.putString("msg", msg);
+
+        Fragment fragment = new ProblemFragment();
+        fragment.setArguments(args);
+        changeFragment(fragment);
     }
 }
