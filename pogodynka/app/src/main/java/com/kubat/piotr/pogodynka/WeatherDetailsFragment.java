@@ -82,6 +82,10 @@ public class WeatherDetailsFragment extends Fragment {
         txtPress.setText(pressure + "hPa");
         weatherIcon.setIconResource(getWeatherIcon(iconCode));
 
+        setAnimation();
+    }
+
+    private void setAnimation() {
         AlphaAnimation fadeIn1 = new AlphaAnimation(0.0f , 1.0f ) ;
         AlphaAnimation fadeIn2 = new AlphaAnimation(0.0f , 1.0f ) ;
         AlphaAnimation fadeIn3 = new AlphaAnimation(0.0f , 1.0f ) ;
@@ -92,7 +96,7 @@ public class WeatherDetailsFragment extends Fragment {
         weatherIcon.startAnimation(fadeIn2);
         weatherTab.startAnimation(fadeIn4);
 
-        int duration = 600;
+        int duration = 500;
 
         fadeIn1.setDuration(duration);
         fadeIn1.setFillAfter(true);

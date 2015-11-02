@@ -53,10 +53,11 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                load();
+                load(false);
                 refreshLayout.setRefreshing(false);
             }
         });
+        refreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
         fragmentManager = getFragmentManager();
 
         return view;
@@ -79,16 +80,18 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
     @Override
     public void onResume() {
         super.onResume();
-        load();
+        load(true);
     }
 
-    private void load() {
+    private void load(final boolean showProgress) {
         ConnectivityManager connMgr = (ConnectivityManager)
                 this.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            Fragment fragment = new ProgressFragment();
-            changeFragment(fragment);
+            if(showProgress) {
+                Fragment fragment = new ProgressFragment();
+                changeFragment(fragment);
+            }
             GetWeatherTask task = new GetWeatherTask();
             task.execute(new String[]{cityId});
         } else {
@@ -115,7 +118,7 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
 
     @Override
     public void onRetry() {
-        load();
+        load(true);
     }
 
 
