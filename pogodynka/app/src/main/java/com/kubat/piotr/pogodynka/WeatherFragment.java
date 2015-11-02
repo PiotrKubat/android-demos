@@ -12,8 +12,10 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -28,13 +30,15 @@ import com.kubat.piotr.pogodynka.service.Weather;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WeatherFragment extends Fragment {
+public class WeatherFragment extends Fragment implements ProblemFragment.OnRetryListener {
 
     private String cityId;
 
     private String cityName;
 
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
+
+    private SwipeRefreshLayout refreshLayout;
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -45,7 +49,14 @@ public class WeatherFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = (View)inflater.inflate(R.layout.fragment_weather, container, false);
-
+        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refresh_layout);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                load();
+                refreshLayout.setRefreshing(false);
+            }
+        });
         fragmentManager = getFragmentManager();
 
         return view;
@@ -68,7 +79,10 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        load();
+    }
 
+    private void load() {
         ConnectivityManager connMgr = (ConnectivityManager)
                 this.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -80,8 +94,6 @@ public class WeatherFragment extends Fragment {
         } else {
             showProblem("Brak połączenia z internetem");
         }
-
-
     }
 
     @Override
@@ -101,6 +113,10 @@ public class WeatherFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onRetry() {
+        load();
+    }
 
 
     private class GetWeatherTask extends AsyncTask<String, Integer, Weather> {
@@ -148,8 +164,10 @@ public class WeatherFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString("msg", msg);
 
-        Fragment fragment = new ProblemFragment();
+        ProblemFragment fragment = new ProblemFragment();
+        fragment.setOnRetryListener(this);
         fragment.setArguments(args);
+
         changeFragment(fragment);
     }
 }

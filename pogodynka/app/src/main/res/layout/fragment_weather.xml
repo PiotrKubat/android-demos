@@ -1,7 +1,13 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:id="@+id/weather_content"
-    android:layout_height="match_parent"  android:padding="16dp" android:orientation="vertical" tools:context="com.kubat.piotr.pogodynka.WeatherFragment">
+    android:id="@+id/refresh_layout"
 
+    android:layout_height="match_parent" tools:context="com.kubat.piotr.pogodynka.WeatherFragment">
+    <LinearLayout
+        android:id="@+id/weather_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></LinearLayout>
 
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
