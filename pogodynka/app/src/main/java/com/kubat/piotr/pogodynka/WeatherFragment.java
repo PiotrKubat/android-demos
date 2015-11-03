@@ -53,8 +53,9 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                refreshLayout.setRefreshing(true);
                 load(false);
-                refreshLayout.setRefreshing(false);
+
             }
         });
         refreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
@@ -93,7 +94,7 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
                 changeFragment(fragment);
             }
             GetWeatherTask task = new GetWeatherTask();
-            task.execute(new String[]{cityId});
+            task.execute(cityId);
         } else {
             showProblem("Brak połączenia z internetem");
         }
@@ -136,7 +137,7 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
         }
 
         protected void onProgressUpdate(Integer... progress) {
-
+            // puste
         }
 
         protected void onPostExecute(Weather result) {
@@ -144,6 +145,10 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
                 showWeatherConditions(result);
             } else {
                 showProblem("Nie udało się pobrać informacji o pogodzie dla miasta " + cityName);
+            }
+
+            if(refreshLayout.isRefreshing()) {
+                refreshLayout.setRefreshing(false);
             }
         }
     }
