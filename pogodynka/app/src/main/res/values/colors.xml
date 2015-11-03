@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="level1">#303F9F</color>
     <color name="level2">#3F51B5</color>
-    <color name="level3">#FF4081</color>
+    <color name="level3">@android:color/holo_red_dark</color>
     <color name="default_text_light">#fafafa</color>
     <color name="default_text_dark">#212121</color>
     <color name="background">#fafafa</color>

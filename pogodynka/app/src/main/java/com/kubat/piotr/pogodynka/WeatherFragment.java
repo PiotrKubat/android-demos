@@ -46,8 +46,6 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
     private OnFragmentListener onFragmentListener;
     private ShakeEventManager sd;
 
-    private boolean suspendShake = false;
-
     public WeatherFragment() {
         // Required empty public constructor
     }
@@ -97,7 +95,6 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
     @Override
     public void onResume() {
         super.onResume();
-        sd.register();
         load(true);
     }
 
@@ -108,7 +105,6 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
     }
 
     private void load(final boolean showProgress) {
-        suspendShake = true;
         ConnectivityManager connMgr = (ConnectivityManager)
                 this.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -151,10 +147,10 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
 
     @Override
     public void onShake() {
-        if(!suspendShake) {
 
+            sd.deregister();
             load(true);
-        }
+
     }
 
 
@@ -182,7 +178,7 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
             } else {
                 showProblem("Nie udało się pobrać informacji o pogodzie dla miasta " + cityName);
             }
-            suspendShake = false;
+            sd.register();
             if(refreshLayout.isRefreshing()) {
                 refreshLayout.setRefreshing(false);
             }
