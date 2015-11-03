@@ -1,6 +1,7 @@
 package com.kubat.piotr.pogodynka;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -23,14 +24,17 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.github.pwittchen.weathericonview.WeatherIconView;
+import com.kubat.piotr.pogodynka.contrib.ShakeEventManager;
 import com.kubat.piotr.pogodynka.service.OpenWeatherMap;
 import com.kubat.piotr.pogodynka.service.Weather;
+
+import java.util.logging.Handler;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WeatherFragment extends Fragment implements ProblemFragment.OnRetryListener {
+public class WeatherFragment extends Fragment implements ProblemFragment.OnRetryListener, ShakeEventManager.ShakeListener {
 
     private String cityId;
 
@@ -39,6 +43,10 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
     private FragmentManager fragmentManager;
 
     private SwipeRefreshLayout refreshLayout;
+    private OnFragmentListener onFragmentListener;
+    private ShakeEventManager sd;
+
+    private boolean suspendShake = false;
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -61,7 +69,15 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
         refreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
         fragmentManager = getFragmentManager();
 
+        setTitle("Pogoda dla " + cityName);
+
         return view;
+    }
+
+    private void setTitle(String title) {
+        if(onFragmentListener != null) {
+            onFragmentListener.setAppBarTitle(title);
+        }
     }
 
     private void changeFragment(Fragment fragment) {
@@ -81,10 +97,18 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
     @Override
     public void onResume() {
         super.onResume();
+        sd.register();
         load(true);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        sd.deregister();
+    }
+
     private void load(final boolean showProgress) {
+        suspendShake = true;
         ConnectivityManager connMgr = (ConnectivityManager)
                 this.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -115,11 +139,22 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        sd = new ShakeEventManager();
+        sd.setListener(this);
+        sd.init(this.getActivity());
     }
 
     @Override
     public void onRetry() {
         load(true);
+    }
+
+    @Override
+    public void onShake() {
+        if(!suspendShake) {
+
+            load(true);
+        }
     }
 
 
@@ -128,6 +163,7 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
             int count = cityIds.length;
             for (int i = 0; i < count; i++) {
                 try {
+                   // Thread.sleep(5000);
                     return OpenWeatherMap.getWeather(cityIds[i]);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -146,7 +182,7 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
             } else {
                 showProblem("Nie udało się pobrać informacji o pogodzie dla miasta " + cityName);
             }
-
+            suspendShake = false;
             if(refreshLayout.isRefreshing()) {
                 refreshLayout.setRefreshing(false);
             }
@@ -177,5 +213,19 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
         fragment.setArguments(args);
 
         changeFragment(fragment);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof OnFragmentListener) {
+            onFragmentListener = (OnFragmentListener)activity;
+        } else {
+            throw new ClassCastException("OnFragmentListener interface required");
+        }
+    }
+
+    public interface OnFragmentListener {
+        void setAppBarTitle(String title);
     }
 }

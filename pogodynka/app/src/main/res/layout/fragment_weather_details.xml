@@ -1,6 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:orientation="vertical" tools:context="com.kubat.piotr.pogodynka.WeatherFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context="com.kubat.piotr.pogodynka.WeatherFragment">
 
     <TextView
         android:id="@+id/city_name"
@@ -8,8 +13,9 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="30dp"
+        android:textColor="@color/colorPrimary"
+        android:textColorHighlight="@android:color/holo_blue_dark"
+        android:textSize="50dp"
         android:text=""/>
 
     <com.github.pwittchen.weathericonview.WeatherIconView
@@ -17,21 +23,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        app:weatherIconColor="@color/colorAccent"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="@dimen/default_padding"
         android:text="@string/wi_alien"
         android:textSize="50dp" />
     <TextView
         android:id="@+id/weather_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textSize="30dp"
+        android:textSize="20dp"
+        android:textColor="@color/default_text_dark"
         android:text=""/>
 
     <TableLayout
         android:id="@+id/weather_tab"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_marginTop="@dimen/default_padding"
         android:stretchColumns="*">
         <TableRow
             android:layout_width="match_parent"
@@ -40,6 +52,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
+                android:textColor="@color/default_text_dark"
                 android:text="temperatura"/>
             <TextView
                 android:id="@+id/weather_temp"
@@ -48,6 +61,7 @@
                 android:textAlignment="textEnd"
                 android:textStyle="bold"
                 android:textSize="20dp"
+                android:textColor="@color/default_text_dark"
                 android:text=""/>
         </TableRow>
         <TableRow
@@ -57,6 +71,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
+                android:textColor="@color/default_text_dark"
                 android:text="ciśnienie"/>
             <TextView
                 android:id="@+id/weather_press"
@@ -65,6 +80,7 @@
                 android:textAlignment="textEnd"
                 android:textStyle="bold"
                 android:textSize="20dp"
+                android:textColor="@color/default_text_dark"
                 android:text=""/>
         </TableRow>
     </TableLayout>

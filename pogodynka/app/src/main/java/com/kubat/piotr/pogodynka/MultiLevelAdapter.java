@@ -71,17 +71,17 @@ public class MultiLevelAdapter extends BaseAdapter {
         vh.txt_info.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         if(item instanceof Continent) {
             vh.txt_info.setPadding(10, 10,10,10);
-            vh.txt_info.setBackgroundColor(convertView.getResources().getColor(R.color.c1));
+            vh.txt_info.setBackgroundColor(convertView.getResources().getColor(R.color.level1));
 
         }
         if(item instanceof Country) {
             vh.txt_info.setPadding(40, 10,10,10);
-            vh.txt_info.setBackgroundColor(convertView.getResources().getColor(R.color.c2));
+            vh.txt_info.setBackgroundColor(convertView.getResources().getColor(R.color.level2));
 
         }
         if(item instanceof City) {
             vh.txt_info.setPadding(70, 10,10,10);
-            vh.txt_info.setBackgroundColor(convertView.getResources().getColor(R.color.c3));
+            vh.txt_info.setBackgroundColor(convertView.getResources().getColor(R.color.level3));
         }
         if(item instanceof ExpandableModel) {
             boolean isExpanded = ((ExpandableModel) item).isExpanded();

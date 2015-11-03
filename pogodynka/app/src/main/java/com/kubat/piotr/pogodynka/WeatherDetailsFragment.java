@@ -56,8 +56,6 @@ public class WeatherDetailsFragment extends Fragment {
 
         weatherIcon = (WeatherIconView)view.findViewById(R.id.weather_icon);
 
-        weatherIcon.setIconColor(R.color.colorPrimary);
-
         weatherTab = (TableLayout)view.findViewById(R.id.weather_tab);
 
         showWeatherConditions();

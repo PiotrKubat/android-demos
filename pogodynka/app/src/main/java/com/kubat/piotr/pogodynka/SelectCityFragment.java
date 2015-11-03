@@ -25,7 +25,11 @@ public class SelectCityFragment extends Fragment {
 
     private ListView listView = null;
 
+    private MultiLevelAdapter adapter;
+
     private OnCitySelectedListener onCitySelectedListener = null;
+
+
 
     public SelectCityFragment() {
         // Required empty public constructor
@@ -38,6 +42,7 @@ public class SelectCityFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select_city, container, false);
         listView = (ListView)view.findViewById(R.id.list_of_cities);
+
         return view;
     }
 
@@ -54,6 +59,11 @@ public class SelectCityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        load();
+
+    }
+
+    private void load() {
         Continent[] items = new Continent[0];
         try {
             items = CCCFactory.genData(this.getActivity());
@@ -61,7 +71,7 @@ public class SelectCityFragment extends Fragment {
             e.printStackTrace();
         }
 
-        MultiLevelAdapter adapter = new MultiLevelAdapter(this.getActivity(), items);
+        adapter = new MultiLevelAdapter(this.getActivity(), items);
 
         adapter.setOnModelClicked(new MultiLevelAdapter.OnModelClickedListener() {
             @Override
@@ -71,7 +81,6 @@ public class SelectCityFragment extends Fragment {
         });
 
         listView.setAdapter(adapter);
-
     }
 
     public interface OnCitySelectedListener {

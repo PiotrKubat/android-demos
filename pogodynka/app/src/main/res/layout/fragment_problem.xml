@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:orientation="vertical" tools:context="com.kubat.piotr.pogodynka.ProblemFragment">
+    android:layout_height="wrap_content" android:layout_gravity="center" android:orientation="vertical" tools:context="com.kubat.piotr.pogodynka.ProblemFragment">
 
     <ImageView
         android:layout_width="fill_parent"
@@ -14,14 +14,14 @@
         android:textAlignment="center"
         android:text=""
         android:layout_marginTop="@dimen/default_padding"
-        android:textColor="@color/c2"/>
+        android:textColor="@color/default_text_dark"/>
     <Button
         android:id="@+id/btn_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@color/colorPrimaryDark"
-        android:textColor="@color/c4"
+        android:textColor="@color/default_text_light"
         android:padding="@dimen/default_padding"
         android:layout_marginTop="@dimen/default_padding"
         android:text="@string/retry"/>

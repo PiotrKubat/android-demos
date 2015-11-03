@@ -3,11 +3,10 @@
     android:id="@+id/refresh_layout"
 
     android:layout_height="match_parent" tools:context="com.kubat.piotr.pogodynka.WeatherFragment">
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/weather_content"
-        android:orientation="vertical"
         android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></LinearLayout>
+        android:layout_height="match_parent"></FrameLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>
