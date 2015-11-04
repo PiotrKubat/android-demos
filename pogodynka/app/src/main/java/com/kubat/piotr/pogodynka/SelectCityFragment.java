@@ -2,8 +2,8 @@ package com.kubat.piotr.pogodynka;
 
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +14,6 @@ import com.kubat.piotr.pogodynka.ccc.City;
 import com.kubat.piotr.pogodynka.ccc.Continent;
 import com.kubat.piotr.pogodynka.ccc.Model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,8 +21,6 @@ import java.util.List;
 public class SelectCityFragment extends Fragment {
 
     private ListView listView = null;
-
-    private MultiLevelAdapter adapter;
 
     private OnCitySelectedListener onCitySelectedListener = null;
 
@@ -42,7 +37,7 @@ public class SelectCityFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select_city, container, false);
         listView = (ListView)view.findViewById(R.id.list_of_cities);
-
+        load();
         return view;
     }
 
@@ -59,8 +54,6 @@ public class SelectCityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        load();
-
     }
 
     private void load() {
@@ -71,7 +64,7 @@ public class SelectCityFragment extends Fragment {
             e.printStackTrace();
         }
 
-        adapter = new MultiLevelAdapter(this.getActivity(), items);
+        MultiLevelAdapter adapter = new MultiLevelAdapter(this.getActivity(), items);
 
         adapter.setOnModelClicked(new MultiLevelAdapter.OnModelClickedListener() {
             @Override

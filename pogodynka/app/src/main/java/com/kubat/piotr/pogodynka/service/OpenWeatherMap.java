@@ -20,7 +20,7 @@ public class OpenWeatherMap {
 
     public static String A_U = "http://api.openweathermap.org";
 
-    public static Weather getWeather(String cityId) throws Exception {
+    public static Weather getWeather(final String cityId) throws Exception {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(OpenWeatherMap.A_U)
                 .build();

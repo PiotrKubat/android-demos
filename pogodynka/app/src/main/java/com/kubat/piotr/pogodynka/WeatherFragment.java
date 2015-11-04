@@ -2,39 +2,28 @@ package com.kubat.piotr.pogodynka;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.widget.TableLayout;
-import android.widget.TextView;
 
-import com.github.pwittchen.weathericonview.WeatherIconView;
-import com.kubat.piotr.pogodynka.contrib.ShakeEventManager;
 import com.kubat.piotr.pogodynka.service.OpenWeatherMap;
 import com.kubat.piotr.pogodynka.service.Weather;
-
-import java.util.logging.Handler;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WeatherFragment extends Fragment implements ProblemFragment.OnRetryListener, ShakeEventManager.ShakeListener {
+public class WeatherFragment extends Fragment implements ProblemFragment.OnRetryListener {
 
     private String cityId;
 
@@ -44,7 +33,6 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
 
     private SwipeRefreshLayout refreshLayout;
     private OnFragmentListener onFragmentListener;
-    private ShakeEventManager sd;
 
     public WeatherFragment() {
         // Required empty public constructor
@@ -101,7 +89,6 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
     @Override
     public void onPause() {
         super.onPause();
-        sd.deregister();
     }
 
     private void load(final boolean showProgress) {
@@ -135,22 +122,11 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        sd = new ShakeEventManager();
-        sd.setListener(this);
-        sd.init(this.getActivity());
     }
 
     @Override
     public void onRetry() {
         load(true);
-    }
-
-    @Override
-    public void onShake() {
-
-            sd.deregister();
-            load(true);
-
     }
 
 
@@ -178,7 +154,6 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
             } else {
                 showProblem("Nie udało się pobrać informacji o pogodzie dla miasta " + cityName);
             }
-            sd.register();
             if(refreshLayout.isRefreshing()) {
                 refreshLayout.setRefreshing(false);
             }

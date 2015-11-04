@@ -6,10 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 
-import com.kubat.piotr.pogodynka.R;
 import com.kubat.piotr.pogodynka.ccc.City;
 import com.kubat.piotr.pogodynka.ccc.Continent;
 import com.kubat.piotr.pogodynka.ccc.Country;

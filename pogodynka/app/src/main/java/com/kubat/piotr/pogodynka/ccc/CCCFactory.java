@@ -8,7 +8,6 @@ import com.kubat.piotr.pogodynka.R;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
