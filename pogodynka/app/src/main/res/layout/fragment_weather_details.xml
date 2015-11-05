@@ -30,13 +30,22 @@
     <TextView
         android:id="@+id/weather_temp"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight=".85"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:textAlignment="center"
+        android:gravity="center_vertical|right"
         android:textSize="80sp"
         android:textColor="@color/default_text_dark"
         android:text="0"/>
+        <TextView
+            android:id="@+id/temp_sign"
+            android:layout_width="0dp"
+            android:layout_weight=".15"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textColor="@color/default_text_dark"
+            android:text="℃"/>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"

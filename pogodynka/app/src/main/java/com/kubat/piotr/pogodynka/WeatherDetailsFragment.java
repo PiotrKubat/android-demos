@@ -34,6 +34,7 @@ public class WeatherDetailsFragment extends Fragment {
     private TextView txtCity;
     private TextView txtDesc;
     private TextView txtTemp;
+    private TextView txtSign;
     private TextView txtPress;
     private TextView txtHumidity;
     private WeatherIconView weatherIcon;
@@ -55,6 +56,8 @@ public class WeatherDetailsFragment extends Fragment {
         txtDesc = (TextView)view.findViewById(R.id.weather_desc);
 
         txtTemp = (TextView)view.findViewById(R.id.weather_temp);
+
+        txtSign = (TextView)view.findViewById(R.id.temp_sign);
 
         txtPress = (TextView)view.findViewById(R.id.weather_press);
 
@@ -83,7 +86,7 @@ public class WeatherDetailsFragment extends Fragment {
     private void showWeatherConditions() {
         txtCity.setText(cityName);
         txtDesc.setText(description);
-        txtTemp.setText(String.format("%d", (long)temperature) + "\u2103");
+        txtTemp.setText(String.format("%d", (long) temperature));
         txtPress.setText(String.format("%d", (long)pressure) + "hPa");
         txtHumidity.setText(String.format("%d", humidity) + "%");
         weatherIcon.setIconResource(getWeatherIcon(iconCode));
@@ -101,6 +104,7 @@ public class WeatherDetailsFragment extends Fragment {
 
         txtCity.startAnimation(fadeIn1);
         txtTemp.setAnimation(fadeIn2);
+        txtSign.setAnimation(fadeIn2);
         txtDesc.startAnimation(fadeIn3);
         weatherIcon.startAnimation(fadeIn3);
         weatherTab.startAnimation(fadeIn4);
@@ -193,7 +197,8 @@ public class WeatherDetailsFragment extends Fragment {
             color = getResources().getColor(R.color.primary_red);
 
         txtTemp.setTextColor(color);
-        weatherIcon.setIconColor(color);
+        txtSign.setTextColor(color);
+        //weatherIcon.setIconColor(color);
 
     }
 }
