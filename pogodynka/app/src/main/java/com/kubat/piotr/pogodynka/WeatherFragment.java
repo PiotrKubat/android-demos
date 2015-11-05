@@ -166,9 +166,10 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
         Bundle args = new Bundle();
         args.putString("cityName", cityName);
         args.putString("description", result.getDescription());
-        args.putDouble("temperature", result.getTemperature());
+        args.putDouble("temperature", Math.round(result.getTemperature()));
         args.putDouble("pressure", result.getPressure());
         args.putString("iconCode", result.getIconCode());
+        args.putInt("humidity", result.getHumidity());
 
         Fragment fragment = new WeatherDetailsFragment();
         fragment.setArguments(args);

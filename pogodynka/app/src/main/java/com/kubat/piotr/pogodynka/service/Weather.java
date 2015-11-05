@@ -13,6 +13,8 @@ public class Weather {
 
     private double pressure;
 
+    private int humidity;
+
     private String iconCode;
 
     public int getWeather_id() {
@@ -31,11 +33,16 @@ public class Weather {
         return pressure;
     }
 
-    public Weather(int weather_id, String description, double temperature, double pressure, String iconCode) {
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public Weather(int weather_id, String description, double temperature, double pressure, int humidity, String iconCode) {
         this.weather_id = weather_id;
         this.description = description;
         this.temperature = temperature;
         this.pressure = pressure;
+        this.humidity = humidity;
         this.iconCode = iconCode;
     }
 

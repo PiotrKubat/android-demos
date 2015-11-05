@@ -40,8 +40,9 @@ public class OpenWeatherMap {
             JSONObject mObj = jsonObject.getJSONObject("main");
             double temp = mObj.getDouble("temp");
             double pressure = mObj.getDouble("pressure");
+            int humidity = mObj.getInt("humidity");
 
-            return new Weather(id, desc, temp, pressure, iconCode);
+            return new Weather(id, desc, temp, pressure, humidity, iconCode);
         } else {
             return null;
         }

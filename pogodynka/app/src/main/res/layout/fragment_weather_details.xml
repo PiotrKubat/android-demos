@@ -1,35 +1,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.kubat.piotr.pogodynka.WeatherFragment">
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical">
     <TextView
         android:id="@+id/city_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
-        android:textColorHighlight="@android:color/holo_blue_dark"
-        android:textSize="50dp"
-        android:text=""/>
+        android:textColor="@color/default_text_dark"
+        android:textSize="30sp"
+        android:text="Test"/>
 
-    <com.github.pwittchen.weathericonview.WeatherIconView
-        android:id="@+id/weather_icon"
+    <LinearLayout
+        android:id="@+id/wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/city_name"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:layout_below="@id/city_name">
+    <TextView
+        android:id="@+id/weather_temp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:textSize="80sp"
+        android:textColor="@color/default_text_dark"
+        android:text="0"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+    <com.github.pwittchen.weathericonview.WeatherIconView
+        android:id="@+id/weather_icon"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
         android:textAlignment="center"
         app:weatherIconColor="@android:color/holo_red_dark"
         android:textColor="@android:color/holo_red_dark"
-        android:layout_marginTop="@dimen/default_padding"
         android:text="@string/wi_alien"
-        android:textSize="50dp" />
+        app:weatherIconSize="70"
+        android:textSize="70sp" />
     <TextView
         android:id="@+id/weather_desc"
         android:layout_width="match_parent"
@@ -38,56 +60,57 @@
         android:layout_below="@id/weather_icon"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="@color/default_text_dark"
         android:text=""/>
-
-    <TableLayout
+    </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/weather_tab"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_padding"
-        android:layout_below="@id/weather_desc"
-        android:stretchColumns="*">
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="0dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/wrapper"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+            <com.github.pwittchen.weathericonview.WeatherIconView
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textColor="@color/default_text_dark"
-                android:text="temperatura"/>
-            <TextView
-                android:id="@+id/weather_temp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:textColor="@color/default_text_dark"
-                android:text=""/>
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textColor="@color/default_text_dark"
-                android:text="ciśnienie"/>
+                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                app:weatherIconColor="@android:color/holo_red_dark"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="@string/wi_barometer"
+                android:textSize="20sp"
+                app:weatherIconSize="20"/>
             <TextView
                 android:id="@+id/weather_press"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="textEnd"
+                android:layout_marginLeft="10dp"
                 android:textStyle="bold"
                 android:textSize="20dp"
                 android:textColor="@color/default_text_dark"
-                android:text=""/>
-        </TableRow>
-    </TableLayout>
+                android:text="1111"/>
+        <com.github.pwittchen.weathericonview.WeatherIconView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textAlignment="center"
+            app:weatherIconColor="@android:color/holo_red_dark"
+            android:textColor="@android:color/holo_red_dark"
+            android:text="@string/wi_humidity"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            app:weatherIconSize="20"/>
+        <TextView
+            android:id="@+id/weather_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:textColor="@color/default_text_dark"
+            android:text="1111"/>
+    </LinearLayout>
 </RelativeLayout>
 </LinearLayout>
 

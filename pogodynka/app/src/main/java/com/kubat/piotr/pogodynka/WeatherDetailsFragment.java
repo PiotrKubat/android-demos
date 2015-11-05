@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -26,15 +27,18 @@ public class WeatherDetailsFragment extends Fragment {
 
     private double pressure;
 
+    private int humidity;
+
     private String iconCode;
 
     private TextView txtCity;
     private TextView txtDesc;
     private TextView txtTemp;
     private TextView txtPress;
+    private TextView txtHumidity;
     private WeatherIconView weatherIcon;
 
-    private TableLayout weatherTab;
+    private LinearLayout weatherTab;
 
     public WeatherDetailsFragment() {
         // Required empty public constructor
@@ -54,9 +58,11 @@ public class WeatherDetailsFragment extends Fragment {
 
         txtPress = (TextView)view.findViewById(R.id.weather_press);
 
+        txtHumidity = (TextView)view.findViewById(R.id.weather_humidity);
+
         weatherIcon = (WeatherIconView)view.findViewById(R.id.weather_icon);
 
-        weatherTab = (TableLayout)view.findViewById(R.id.weather_tab);
+        weatherTab = (LinearLayout)view.findViewById(R.id.weather_tab);
 
         showWeatherConditions();
 
@@ -70,17 +76,21 @@ public class WeatherDetailsFragment extends Fragment {
         description = args.getString("description");
         temperature = args.getDouble("temperature");
         pressure = args.getDouble("pressure");
+        humidity = args.getInt("humidity");
         iconCode = args.getString("iconCode");
     }
 
     private void showWeatherConditions() {
         txtCity.setText(cityName);
         txtDesc.setText(description);
-        txtTemp.setText(temperature + "\u2103");
-        txtPress.setText(pressure + "hPa");
+        txtTemp.setText(String.format("%d", (long)temperature) + "\u2103");
+        txtPress.setText(String.format("%d", (long)pressure) + "hPa");
+        txtHumidity.setText(String.format("%d", humidity) + "%");
         weatherIcon.setIconResource(getWeatherIcon(iconCode));
 
+        setTempColors(temperature);
         setAnimation();
+
     }
 
     private void setAnimation() {
@@ -90,8 +100,9 @@ public class WeatherDetailsFragment extends Fragment {
         AlphaAnimation fadeIn4 = new AlphaAnimation(0.0f , 1.0f ) ;
 
         txtCity.startAnimation(fadeIn1);
+        txtTemp.setAnimation(fadeIn2);
         txtDesc.startAnimation(fadeIn3);
-        weatherIcon.startAnimation(fadeIn2);
+        weatherIcon.startAnimation(fadeIn3);
         weatherTab.startAnimation(fadeIn4);
 
         int duration = 500;
@@ -155,5 +166,34 @@ public class WeatherDetailsFragment extends Fragment {
         return getString(iconResCode);
     }
 
+    private void setTempColors(double temp) {
+        int color = -1;
 
+        if (temp < -10)
+            color = getResources().getColor(R.color.primary_indigo);
+        else if (temp >=-10 && temp <=-5)
+            color = getResources().getColor(R.color.primary_blue);
+        else if (temp >-5 && temp < 5)
+            color = getResources().getColor(R.color.primary_light_blue);
+        else if (temp >= 5 && temp < 10)
+            color = getResources().getColor(R.color.primary_teal);
+        else if (temp >= 10 && temp < 15)
+            color = getResources().getColor(R.color.primary_light_green);
+        else if (temp >= 15 && temp < 20)
+            color = getResources().getColor(R.color.primary_green);
+        else if (temp >= 20 && temp < 25)
+            color = getResources().getColor(R.color.primary_lime);
+        else if (temp >= 25 && temp < 28)
+            color = getResources().getColor(R.color.primary_yellow);
+        else if (temp >= 28 && temp < 32)
+            color = getResources().getColor(R.color.primary_amber);
+        else if (temp >= 32 && temp < 35)
+            color = getResources().getColor(R.color.primary_orange);
+        else if (temp >= 35)
+            color = getResources().getColor(R.color.primary_red);
+
+        txtTemp.setTextColor(color);
+        weatherIcon.setIconColor(color);
+
+    }
 }
