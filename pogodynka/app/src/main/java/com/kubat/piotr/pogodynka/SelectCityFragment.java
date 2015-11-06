@@ -16,13 +16,13 @@ import com.kubat.piotr.pogodynka.ccc.Model;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment odpowiedzialny za wyświetlanie listy 3 poziomowej do wyboru miasta
  */
 public class SelectCityFragment extends Fragment {
 
     private ListView listView = null;
 
-    private OnCitySelectedListener onCitySelectedListener = null;
+    private OnCitySelectedListener onCitySelectedListener = null; // referencja do listenera, który obsługiwał będzie zadzenie wyboru miasta z listy
 
 
 
@@ -56,6 +56,7 @@ public class SelectCityFragment extends Fragment {
         super.onResume();
     }
 
+    // załadowanie elementów listy
     private void load() {
         Continent[] items = new Continent[0];
         try {
@@ -64,8 +65,10 @@ public class SelectCityFragment extends Fragment {
             e.printStackTrace();
         }
 
+        // adapter obługujący 3 poziomową listę
         MultiLevelAdapter adapter = new MultiLevelAdapter(this.getActivity(), items);
 
+        // obsługa zdarzenia wyboru miasta na liście i wywołanie funkcji w listenerze
         adapter.setOnModelClicked(new MultiLevelAdapter.OnModelClickedListener() {
             @Override
             public void onModelClicked(Model model) {

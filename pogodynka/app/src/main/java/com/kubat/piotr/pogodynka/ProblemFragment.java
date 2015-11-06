@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment do wyświetlania informacji o problemach w działaniu aplikacji (np. braku dostępu do internetu)
  */
 public class ProblemFragment extends Fragment {
 
@@ -30,7 +30,7 @@ public class ProblemFragment extends Fragment {
     @Override
     public void setArguments(Bundle args) {
         super.setArguments(args);
-        problemDesc = args.getString("msg");
+        problemDesc = args.getString("msg"); //ustawienie informacji o błędzie
 
     }
 
@@ -61,6 +61,7 @@ public class ProblemFragment extends Fragment {
         this.onRetryListener = onRetryListener;
     }
 
+    // interfejs pozwalający na wywołanie funkcji ponownego wykonania operacji po pojawieniu się błędu
     public interface OnRetryListener {
         void onRetry();
     }

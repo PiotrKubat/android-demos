@@ -22,6 +22,7 @@ import java.util.List;
  */
 public class MultiLevelAdapter extends BaseAdapter {
 
+    // lista zawierająca wszystkie widoczne elementy ma liście
     private List<Model> _contentList;
 
     private LayoutInflater layoutInflater;
@@ -54,18 +55,20 @@ public class MultiLevelAdapter extends BaseAdapter {
     public View getView(final int i, View convertView, ViewGroup viewGroup) {
         ViewHolder vh = null;
         if(convertView == null) {
-            vh = new ViewHolder();
-            convertView = layoutInflater.inflate(R.layout.info_item, null);
+            vh = new ViewHolder(); // obiekt przechowujący referencje do elementów listview
+            convertView = layoutInflater.inflate(R.layout.info_item, null); // pobranie custom view do wyświetlenia elementu listy
             vh.txt_info = (TextView)convertView.findViewById(R.id.txt_info);
             convertView.setTag(vh);
         } else {
             vh = (ViewHolder)convertView.getTag();
         }
 
-        final Model item = _contentList.get(i);
+        final Model item = _contentList.get(i); // pobranie elemntu listy
 
         vh.txt_info.setText(item.getName());
         vh.txt_info.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+        // ustawiebia wizualne elementów listview
         if(item instanceof Continent) {
             vh.txt_info.setPadding(10, 10,10,10);
             vh.txt_info.setBackgroundColor(convertView.getResources().getColor(R.color.level1));
@@ -80,6 +83,7 @@ public class MultiLevelAdapter extends BaseAdapter {
             vh.txt_info.setPadding(70, 10,10,10);
             vh.txt_info.setBackgroundColor(convertView.getResources().getColor(R.color.level3));
         }
+        // dla elementów zawierających podlisty ustawiamy ikonę oraz obsługę pokazania/chowania podlisty
         if(item instanceof ExpandableModel) {
             boolean isExpanded = ((ExpandableModel) item).isExpanded();
             if(isExpanded) {
@@ -87,8 +91,7 @@ public class MultiLevelAdapter extends BaseAdapter {
             } else {
                 vh.txt_info.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_expand_more_white_24dp, 0, 0, 0);
             }
-        }
-        if(item instanceof ExpandableModel) {
+            //przy kliknięciu na element listy pokazujemy/chowamy podlistę
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -113,7 +116,7 @@ public class MultiLevelAdapter extends BaseAdapter {
                             }
                             c.setExpanded(false);
                         }
-                        notifyDataSetChanged();
+                        notifyDataSetChanged(); // odświeżenie adaptera
                     } else if (item instanceof Country) {
                         Country c = (Country) item;
                         if (!c.isExpanded()) {
@@ -127,11 +130,12 @@ public class MultiLevelAdapter extends BaseAdapter {
                             }
                             c.setExpanded(false);
                         }
-                        notifyDataSetChanged();
+                        notifyDataSetChanged(); // odświeżenie adaptera
                     }
                 }
             });
-        } else if(item instanceof Model) {
+        } else {
+            // dla miast wywołujemy zdarzenie wyboru miasta przekazując w nim referencje do niego
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -144,7 +148,7 @@ public class MultiLevelAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private OnModelClickedListener onModelClickedListener;
+    private OnModelClickedListener onModelClickedListener; // referencja do listenera zdarzenia wyboru miasta
 
     public void setOnModelClicked(OnModelClickedListener onModelClickedListener) {
         this.onModelClickedListener = onModelClickedListener;
@@ -156,6 +160,8 @@ public class MultiLevelAdapter extends BaseAdapter {
 
     }
 
+    // klasa do przechowywania referencji do elementów widoku elementu listy
+    // wykorzystywana aby zwiększyć wydajność renderowania całej listy (unikamy wywoływania funkcji findViewById()
     static class ViewHolder {
         public TextView txt_info = null;
     }

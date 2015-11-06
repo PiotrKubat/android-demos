@@ -13,6 +13,7 @@ import retrofit.http.Query;
 
 /**
  * Created by piotrk on 30.10.15.
+ * Klasa odpwiedzialna za pobranie danych o pogodzie z serwisu OpenWeatherMap
  */
 public class OpenWeatherMap {
 
@@ -48,6 +49,7 @@ public class OpenWeatherMap {
         }
     }
 
+    // interfejs wykorzystywany przez bibliotekę retrofit
     private interface OpenWeatherMapService{
 
         @GET("/data/2.5/weather?lang=pl&units=metric")

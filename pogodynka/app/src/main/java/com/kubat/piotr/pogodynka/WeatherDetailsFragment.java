@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.github.pwittchen.weathericonview.WeatherIconView;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment do wyświetlania szczegółów pogody
  */
 public class WeatherDetailsFragment extends Fragment {
 
@@ -83,6 +83,7 @@ public class WeatherDetailsFragment extends Fragment {
         iconCode = args.getString("iconCode");
     }
 
+    // ustawienie wartości do widgetów
     private void showWeatherConditions() {
         txtCity.setText(cityName);
         txtDesc.setText(description);
@@ -91,11 +92,15 @@ public class WeatherDetailsFragment extends Fragment {
         txtHumidity.setText(String.format("%d", humidity) + "%");
         weatherIcon.setIconResource(getWeatherIcon(iconCode));
 
+        // ustawienie koloru widgetu temperatury
         setTempColors(temperature);
+
+        // ustawienie animacji
         setAnimation();
 
     }
 
+    // funkcja przypisująca animacje widgetom
     private void setAnimation() {
         AlphaAnimation fadeIn1 = new AlphaAnimation(0.0f , 1.0f ) ;
         AlphaAnimation fadeIn2 = new AlphaAnimation(0.0f , 1.0f ) ;
@@ -127,6 +132,7 @@ public class WeatherDetailsFragment extends Fragment {
         fadeIn4.setStartOffset(duration + fadeIn3.getStartOffset());
     }
 
+    // wybór ikony dla warunków pogodowych
     private String getWeatherIcon(String iconCode) {
         int iconResCode = com.github.pwittchen.weathericonview.library.R.string.wi_alien;
         if(iconCode == null) return getString(iconResCode);
@@ -170,6 +176,7 @@ public class WeatherDetailsFragment extends Fragment {
         return getString(iconResCode);
     }
 
+    // przypisanie koloru w zależności od temperatury
     private void setTempColors(double temp) {
         int color = -1;
 

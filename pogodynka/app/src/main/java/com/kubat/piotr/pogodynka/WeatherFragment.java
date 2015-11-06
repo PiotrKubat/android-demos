@@ -21,7 +21,8 @@ import com.kubat.piotr.pogodynka.service.Weather;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Główny fragment odpowiedzialny za obsługę pobierania i wyświetlania pogody
+ * dla wybranego miasta
  */
 public class WeatherFragment extends Fragment implements ProblemFragment.OnRetryListener {
 
@@ -31,6 +32,7 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
 
     private FragmentManager fragmentManager;
 
+    // layout pozwalający na odświeżenie zawartości po przeciągnięciu palcem po ekranie
     private SwipeRefreshLayout refreshLayout;
     private OnFragmentListener onFragmentListener;
 
@@ -91,18 +93,23 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
         super.onPause();
     }
 
+    // pobranie i wyświetlenie warunków pogodowych
     private void load(final boolean showProgress) {
+        // sprawdzenie dostępności połączenia do internetu
         ConnectivityManager connMgr = (ConnectivityManager)
                 this.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
+            // jeżeli mamy połączenie do internety, wyświetlamy fragment pokazujący postęp operacji
             if(showProgress) {
                 Fragment fragment = new ProgressFragment();
                 changeFragment(fragment);
             }
+            // uruchomienie w oddzielnym wątku pobierania informacji o pogodzie
             GetWeatherTask task = new GetWeatherTask();
             task.execute(cityId);
         } else {
+            // jeżeli nie ma połączenia z internetem wyswietlamy komunikat
             showProblem("Brak połączenia z internetem");
         }
     }
@@ -124,19 +131,24 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
         setHasOptionsMenu(true);
     }
 
+    // w przypadku powrotu do aplikacji (np. odblokowaniu telefonu) odświeżamy informację o pogodzie
     @Override
     public void onRetry() {
         load(true);
     }
 
 
+    /*
+     * klasa odpowiedzialna za uruchomienie wątku pobierania danych o pogodzie i w przypadku powodzenia
+     * ich wyświetlenie
+     */
     private class GetWeatherTask extends AsyncTask<String, Integer, Weather> {
         protected Weather doInBackground(String... cityIds) {
             int count = cityIds.length;
             for (int i = 0; i < count; i++) {
                 try {
-                   // Thread.sleep(5000);
-                    return OpenWeatherMap.getWeather(cityIds[i]);
+                   // Thread.sleep(5000); // dla sprawdzenia wyświetlania postępu operacji
+                    return OpenWeatherMap.getWeather(cityIds[i]); // pobranie danych o pogodzie
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -150,19 +162,20 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
 
         protected void onPostExecute(Weather result) {
             if(result != null) {
+                // jeżeli udało sie pobrać informacje o pogodzie to je wyświetlamy
                 showWeatherConditions(result);
             } else {
                 showProblem("Nie udało się pobrać informacji o pogodzie dla miasta " + cityName);
             }
+            // jeżeli wątek uruchomiony został z poprzez swiperefreshlayout, informujemy go o zakończeniu operacji
             if(refreshLayout.isRefreshing()) {
                 refreshLayout.setRefreshing(false);
             }
         }
     }
 
+    // wywołania fragmentu wyświetlającego szczegóły pogody
     private void showWeatherConditions(Weather result) {
-
-
         Bundle args = new Bundle();
         args.putString("cityName", cityName);
         args.putString("description", result.getDescription());
@@ -176,6 +189,7 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
         changeFragment(fragment);
     }
 
+    // wywołanie fragmentu wyświetlającego informację o napotkanych problemach
     private void showProblem(String msg) {
         Bundle args = new Bundle();
         args.putString("msg", msg);

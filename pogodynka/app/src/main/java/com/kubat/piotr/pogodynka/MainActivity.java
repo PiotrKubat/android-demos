@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements SelectCityFragmen
     // podmiana fragmenu w activity
     private void changeFragment(Fragment fragment, boolean isAddToBackStack) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // ustawienie animacji przy zmianie fragmentów
         transaction.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out);
         transaction.replace(R.id.container, fragment);
         if(isAddToBackStack) {
@@ -55,20 +56,22 @@ public class MainActivity extends AppCompatActivity implements SelectCityFragmen
         }
     }
 
+    // obsługa zdarzenia wybrania miasta na liście
     @Override
     public void onCitySelected(City city) {
         if(city == null)
             throw new IllegalArgumentException("argument is null");
         Fragment fragment = new WeatherFragment();
         Bundle args = new Bundle();
-        args.putString("cityId", city.getId());
-        args.putString("cityName", city.getName());
+        args.putString("cityId", city.getId()); //id miasta
+        args.putString("cityName", city.getName()); // nazwa miasta (polska nazwa)
         fragment.setArguments(args);
         changeFragment(fragment, true);
 
     }
 
 
+    // obsługa zmiany tytułu appbara z poziomu aktywngego fragmentu
     @Override
     public void setAppBarTitle(String title) {
         getSupportActionBar().setTitle(title);

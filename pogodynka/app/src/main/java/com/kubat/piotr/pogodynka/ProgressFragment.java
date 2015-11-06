@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment służący tylko i wyłącznie do wyświetlenia, że coś się dzieje
  */
 public class ProgressFragment extends Fragment {
 

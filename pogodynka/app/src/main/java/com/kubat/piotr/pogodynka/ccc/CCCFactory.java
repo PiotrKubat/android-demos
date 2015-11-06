@@ -12,6 +12,7 @@ import java.io.InputStream;
 
 /**
  * Created by piotrk on 27.10.15.
+ * Klasa pobierająca listę miast z podziałem na kontynenty i państwa z pliku json w resourcach
  */
 public class CCCFactory {
 
