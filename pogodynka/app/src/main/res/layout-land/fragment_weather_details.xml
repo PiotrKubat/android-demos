@@ -24,10 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:padding="@dimen/default_padding"
-        android:elevation="5dp">
-
-
+        android:padding="@dimen/default_padding">
         <LinearLayout
             android:id="@+id/wrapper"
             android:layout_width="match_parent"
@@ -40,7 +37,7 @@
             android:layout_weight=".85"
             android:layout_height="match_parent"
             android:gravity="center_vertical|right"
-            android:textSize="80sp"
+            android:textSize="72sp"
             android:textColor="@color/secondary_text"
             android:text="0"/>
             <TextView
@@ -50,7 +47,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:textAlignment="center"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textColor="@color/secondary_text"
                 android:text="℃"/>
         <LinearLayout
@@ -66,8 +63,8 @@
             app:weatherIconColor="@color/accent"
             android:textColor="@color/accent"
             android:text="@string/wi_alien"
-            app:weatherIconSize="80"
-            android:textSize="80sp" />
+            app:weatherIconSize="72"
+            android:textSize="72sp" />
         <TextView
             android:id="@+id/weather_desc"
             android:layout_width="match_parent"
@@ -85,7 +82,7 @@
             android:id="@+id/weather_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_below="@id/wrapper"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
