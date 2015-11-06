@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="level1">#303F9F</color>
-    <color name="level2">@android:color/holo_blue_light</color>
-    <color name="level3">@android:color/holo_red_light</color>
-    <color name="default_text_light">#fafafa</color>
-    <color name="default_text_dark">#4a4a4a</color>
-    <color name="background">#fafafa</color>
+    <color name="primary">#009688</color>
+    <color name="primary_dark">#00796B</color>
+    <color name="primary_light">#B2DFDB</color>
+    <color name="accent">#FF5252</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#B6B6B6</color>
+
+    <color name="primary_text_light">#FFFFFF</color>
+
+    <color name="level1">@color/primary_dark</color>
+    <color name="level2">@color/primary</color>
+    <color name="level3">@color/accent</color>
+
     <color name="orange">#FF9900</color>
     <color name="green">#009900</color>
     <color name="blue">#000099</color>

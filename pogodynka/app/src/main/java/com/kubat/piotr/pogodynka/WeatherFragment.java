@@ -57,7 +57,7 @@ public class WeatherFragment extends Fragment implements ProblemFragment.OnRetry
         refreshLayout.setColorSchemeResources(R.color.orange, R.color.green, R.color.blue);
         fragmentManager = getFragmentManager();
 
-        setTitle("Pogoda dla " + cityName);
+        setTitle("Pogoda dla ");
 
         return view;
     }

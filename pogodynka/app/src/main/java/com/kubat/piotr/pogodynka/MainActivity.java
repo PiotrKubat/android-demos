@@ -28,14 +28,15 @@ public class MainActivity extends AppCompatActivity implements SelectCityFragmen
     private void changeFragment(Fragment fragment, boolean isAddToBackStack) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         // ustawienie animacji przy zmianie fragmentów
-        transaction.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out);
+        if(isAddToBackStack)
+            transaction.setCustomAnimations(R.anim.slide_right_in, R.anim.slide_left_out, R.anim.slide_left_in, R.anim.slide_right_out);
         transaction.replace(R.id.container, fragment);
         if(isAddToBackStack) {
 
             transaction.addToBackStack(null);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.commit();
     }
 

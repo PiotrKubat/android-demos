@@ -5,7 +5,6 @@
     android:layout_height="match_parent" tools:context="com.kubat.piotr.pogodynka.WeatherFragment">
     <FrameLayout
         android:id="@+id/weather_content"
-        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></FrameLayout>
 

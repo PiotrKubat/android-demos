@@ -3,25 +3,28 @@
     android:layout_height="wrap_content" android:layout_gravity="center" android:orientation="vertical" tools:context="com.kubat.piotr.pogodynka.ProblemFragment">
 
     <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
         android:scaleType="fitCenter"
-        android:src="@android:drawable/ic_dialog_alert"/>
+        android:layout_gravity="center"
+        android:src="@android:drawable/ic_dialog_alert"
+        android:background="@color/accent"
+        android:padding="@dimen/default_padding"/>
     <TextView
         android:id="@+id/problem_text"
         android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:textSize="30dp"
+        android:textSize="32sp"
         android:textAlignment="center"
         android:text=""
         android:layout_marginTop="@dimen/default_padding"
-        android:textColor="@android:color/holo_red_dark"/>
+        android:textColor="@color/accent"/>
     <Button
         android:id="@+id/btn_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/default_text_light"
+        android:background="@color/primary"
+        android:textColor="@color/primary_text_light"
         android:padding="@dimen/default_padding"
         android:layout_marginTop="@dimen/default_padding"
         android:text="@string/retry"/>

@@ -1,19 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
-    android:layout_height="wrap_content" android:layout_gravity="center" android:orientation="vertical" tools:context="com.kubat.piotr.pogodynka.ProgressFragment">
+    android:layout_height="wrap_content" android:padding="@dimen/default_padding" android:layout_gravity="center" android:orientation="vertical" tools:context="com.kubat.piotr.pogodynka.ProgressFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/progress_info"
-        android:textSize="25dp"
-        android:textColor="@color/default_text_dark"
+        android:textSize="25sp"
+        android:textColor="@color/primary_text"
         android:gravity="center"
         />
     <ProgressBar
         android:layout_width="match_parent"
 
-        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal" android:minHeight="48dp"
+        style="@android:style/Widget.Holo.ProgressBar.Horizontal" android:minHeight="48dp"
         android:indeterminate="true"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"

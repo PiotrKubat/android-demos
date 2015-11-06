@@ -4,9 +4,9 @@
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/txt_info"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:textColor="@color/default_text_light"
+        android:textSize="24dp"
+        android:textColor="@color/primary_text_light"
         />
 </LinearLayout>

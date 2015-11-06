@@ -7,15 +7,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/label"
-        android:textSize="25dp"
+        android:textSize="16sp"
         android:layout_gravity="center"
-        android:textColor="@color/default_text_dark"
+        android:textColor="@color/primary_text"
+        android:background="@color/primary_light"
         android:padding="@dimen/default_padding"/>
     <ListView
         android:id="@+id/list_of_cities"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        >
+        android:divider="@color/divider"
+        android:dividerHeight="1dp">
 
     </ListView>
 
