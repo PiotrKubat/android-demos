@@ -1,0 +1,40 @@
++ pogodynka
+
+listview
+baseadapter - do modelu danych
+
+openweathermap
+
+gson - json
+retrofit - http
+okhttp - http
+httpurlconnection - http
+
+asynctask - threads
+
++ lokalizator
+logowanie poprzez Facebooka lub wasny serwis
+mvc/mvp i ioc (dagger2)
+mapy googla i wywietlanie bieżacej lokalizacji (użytkownika i wybranych miejsc - Google Places)
+zapamietywanie ustawień (danych logowania)
+boczne menu z informacja o zalogowanym użytkowniku oraz opcjach widoku mapy
+wyszukiwarka miejsc
+wyswietlanie trasy do podanego miejsca
+
+linki:
+*MVP i Dagger 2:
+https://android-arsenal.com/details/3/1717
+https://medium.com/@franpulido/retrofit-dagger-mvp-305ac2cf646c
+https://github.com/LiveTyping/u2020-mvp
+https://github.com/pedrovgs/EffectiveAndroidUI
+http://google.github.io/dagger/
+https://www.future-processing.pl/blog/dependency-injection-with-dagger-2/
+https://github.com/mgrzechocinski/dagger2-example
+*Facebook API:
+https://developers.facebook.com/docs/facebook-login/android
+*Google API:
+https://developers.google.com/maps/documentation/android-api/?hl=pl
+https://developers.google.com/places/android-api/?hl=pl
+
+
+
