@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.kubat.piotr.pogodynka.ccc.CCCFactory;
+import com.kubat.piotr.pogodynka.ccc.ContinentCountryCityFactory;
 import com.kubat.piotr.pogodynka.ccc.City;
 import com.kubat.piotr.pogodynka.ccc.Continent;
 import com.kubat.piotr.pogodynka.ccc.Model;
@@ -21,6 +21,8 @@ import com.kubat.piotr.pogodynka.ccc.Model;
 public class SelectCityFragment extends Fragment {
 
     private ListView listView = null;
+
+    private MultiLevelAdapter adapter;
 
     private OnCitySelectedListener onCitySelectedListener = null; // referencja do listenera, który obsługiwał będzie zadzenie wyboru miasta z listy
 
@@ -60,13 +62,14 @@ public class SelectCityFragment extends Fragment {
     private void load() {
         Continent[] items = new Continent[0];
         try {
-            items = CCCFactory.genData(this.getActivity());
+            items = ContinentCountryCityFactory.genData(this.getActivity());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // adapter obługujący 3 poziomową listę
-        MultiLevelAdapter adapter = new MultiLevelAdapter(this.getActivity(), items);
+        if(adapter == null)
+            adapter = new MultiLevelAdapter(this.getActivity(), items);
 
         // obsługa zdarzenia wyboru miasta na liście i wywołanie funkcji w listenerze
         adapter.setOnModelClicked(new MultiLevelAdapter.OnModelClickedListener() {
