@@ -1,0 +1,115 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.piotrkubat.lokalizator.menu.MenuFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/fake_data"
+            android:layout_width="match_parent" android:layout_height="@dimen/nav_header_height"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/side_nav_bar"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark" android:orientation="vertical"
+            android:gravity="bottom">
+
+            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                android:src="@android:drawable/sym_def_app_icon" android:id="@+id/avatar" />
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:paddingTop="@dimen/nav_header_vertical_spacing" android:text="Android Studio"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" android:id="@+id/username" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/places_list"
+            android:layout_alignBottom="@id/fake_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fake_data"
+            android:layout_marginTop="8dp"
+            android:choiceMode="singleChoice"
+            android:divider="#FAFAFA"
+            android:transcriptMode="disabled" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/places_list"
+            android:layout_marginTop="8dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E5E5E5"
+                android:id="@+id/divider" />
+
+            <RelativeLayout
+                android:id="@+id/teren"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/divider">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/ic_terrain_black_24dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="72dp"
+                    android:alpha="0.87"
+                    android:text="Teren"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/satelita"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/teren">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:src="@drawable/ic_satellite_black_24dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="72dp"
+                    android:alpha="0.87"
+                    android:text="Satelita"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</ScrollView>
