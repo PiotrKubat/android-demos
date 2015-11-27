@@ -32,11 +32,19 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.piotrkubat.lokalizator.BuildConfig;
 import com.piotrkubat.lokalizator.R;
+import com.piotrkubat.lokalizator.places.Place;
+import com.piotrkubat.lokalizator.places.PlacesService;
+import com.piotrkubat.lokalizator.places.PlacesServiceImpl;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapFragment extends Fragment  implements LocationView {
+public class MapFragment extends Fragment  implements LocationView, PlacesService.PlacesServiceListener {
+
+    public static final int ZOOM = 15;
+    public static final int DURATION_MS = 100;
 
     @Override
     public boolean isMapReady() {
@@ -47,13 +55,13 @@ public class MapFragment extends Fragment  implements LocationView {
 
     private LocationService locationService;
 
+    private PlacesService placesService;
+
     private MapView mapView;
 
     private GoogleMap mMap;
 
     private FrameLayout mapWrapper;
-
-    private LocationManager locationManager;
 
     public MapFragment() {
         // Required empty public constructor
@@ -67,8 +75,29 @@ public class MapFragment extends Fragment  implements LocationView {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         mapWrapper = (FrameLayout)view.findViewById(R.id.map_wrapper);
         onCreateMapView(view, savedInstanceState);
+        placesService = PlacesServiceImpl.getPlacesService(this);
+        return view;
+    }
 
-        int response = 0;
+    private void onCreateMapView(View view, Bundle savedInstanceState) {
+        mapView = (MapView)view.findViewById(R.id.map);
+        mapView.onCreate(savedInstanceState);
+        mMap = mapView.getMap();
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        MapsInitializer.initialize(this.getActivity());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+        if(locationService == null) {
+            if (!initLocationService()) return;
+        }
+        locationService.startService();
+    }
+
+    private boolean initLocationService() {
         if (Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED  ) {
@@ -77,32 +106,11 @@ public class MapFragment extends Fragment  implements LocationView {
         }
         if (LocationServiceImpl.MY_PERMISSION_RESULT != 0) {
             this.showError("Brak uprawnień do określenia lokalizacji");
+            return false;
         } else {
             locationService = LocationServiceImpl.getLocationService(this, this.getActivity());
         }
-
-
-        return view;
-    }
-
-    private void onCreateMapView(View view, Bundle savedInstanceState) {
-        mapView = (MapView)view.findViewById(R.id.map);
-        mapView.onCreate(savedInstanceState);
-
-
-        mMap = mapView.getMap();
-
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
-
-        MapsInitializer.initialize(this.getActivity());
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
-        if(locationService != null)
-            locationService.startService();
+        return true;
     }
 
     @Override
@@ -129,12 +137,14 @@ public class MapFragment extends Fragment  implements LocationView {
     public void updateMyLocation(LatLng position) {
         mMap.setMyLocationEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(12), 2000, null);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(ZOOM), DURATION_MS, null);
+        placesService.setLocation(position);
+        placesService.search();
     }
 
     @Override
-    public void showLocationOnMap(LatLng position, String title, int type) {
-        mMap.addMarker(new MarkerOptions().position(position).title(title).icon(BitmapDescriptorFactory.fromResource(type)));
+    public void showLocationOnMap(LatLng position, String title, Place.PlaceType type) {
+        mMap.addMarker(new MarkerOptions().position(position).title(title).icon(BitmapDescriptorFactory.defaultMarker(getHue(type))));
     }
 
     @Override
@@ -178,13 +188,68 @@ public class MapFragment extends Fragment  implements LocationView {
     }
 
     @Override
-    public void addPlaceType(String type) {
-        locationService.addPlaceType(type);
+    public void addPlaceType(Place.PlaceType type) {
+        placesService.addPlaceType(type);
+        placesService.search();
     }
 
     @Override
-    public void removePlaceType(String type) {
-        locationService.removePlaceType(type);
+    public void removePlaceType(Place.PlaceType type) {
+        placesService.removePlaceType(type);
+        placesService.search();
+    }
+
+
+    private static int getIcon(Place.PlaceType type) {
+
+        switch (type) {
+            case RESTAURANT:
+                return R.drawable.ic_restaurant_menu_black_24dp;
+            case MOVIE_THEATER:
+                return R.drawable.ic_restaurant_menu_black_24dp;
+            case LODGING:
+                return R.drawable.ic_local_hotel_black_24dp;
+            case CAFE:
+                return R.drawable.ic_local_cafe_black_24dp;
+            case BANK:
+                return R.drawable.ic_account_balance_black_24dp;
+        }
+        return 0;
+    }
+
+    private static float getHue(Place.PlaceType type) {
+
+        switch (type) {
+            case RESTAURANT:
+                return BitmapDescriptorFactory.HUE_GREEN;
+            case MOVIE_THEATER:
+                return BitmapDescriptorFactory.HUE_VIOLET;
+            case LODGING:
+                return BitmapDescriptorFactory.HUE_ORANGE;
+            case CAFE:
+                return BitmapDescriptorFactory.HUE_YELLOW;
+            case BANK:
+                return BitmapDescriptorFactory.HUE_RED;
+        }
+        return BitmapDescriptorFactory.HUE_BLUE;
+    }
+
+    @Override
+    public void onResult(List<Place> placeList) {
+        this.clearMarkers();
+        for(Place place : placeList) {
+            this.showLocationOnMap(place.getLocation(), place.getName(), place.getType());
+        }
+    }
+
+    @Override
+    public void onProgress(String progressInfo) {
+        this.showInfo(progressInfo);
+    }
+
+    @Override
+    public void onError(String errorMsg) {
+        this.showError(errorMsg);
     }
 }
 

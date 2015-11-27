@@ -5,15 +5,15 @@
         <menu>
     <group android:id="@+id/group_types" android:checkableBehavior="all">
         <item android:id="@+id/nav_kawiarnie" android:icon="@drawable/ic_local_cafe_black_24dp"
-            android:title="Kawiarnie" />
+            android:title="Kawiarnie" android:checkable="true" />
         <item android:id="@+id/nav_restauracje" android:icon="@drawable/ic_restaurant_menu_black_24dp"
-            android:title="Restauracje" />
+            android:title="Restauracje"  android:checkable="true" />
         <item android:id="@+id/nav_kina" android:icon="@drawable/ic_local_movies_black_24dp"
-            android:title="Kina" />
+            android:title="Kina"  android:checkable="true"/>
         <item android:id="@+id/nav_hotele" android:icon="@drawable/ic_local_hotel_black_24dp"
-            android:title="Hotele" />
+            android:title="Hotele"  android:checkable="true"/>
         <item android:id="@+id/nav_banki" android:icon="@drawable/ic_account_balance_black_24dp"
-            android:title="Banki i bankomaty" />
+            android:title="Banki i bankomaty"  android:checkable="true"/>
     </group>
         </menu>
     </item>
@@ -21,11 +21,11 @@
         <menu>
             <group android:id="@+id/group_options" android:checkableBehavior="single">
                 <item android:id="@+id/nav_normal" android:icon="@android:drawable/ic_menu_gallery"
-                    android:title="Normalny" />
+                    android:title="Normalny" android:checkable="true" />
                 <item android:id="@+id/nav_satelita" android:icon="@drawable/ic_satellite_black_24dp"
-                android:title="Satelita" />
+                android:title="Satelita" android:checkable="true" />
                 <item android:id="@+id/nav_teren" android:icon="@drawable/ic_terrain_black_24dp"
-                    android:title="Teren" />
+                    android:title="Teren" android:checkable="true" />
             </group>
         </menu>
     </item>

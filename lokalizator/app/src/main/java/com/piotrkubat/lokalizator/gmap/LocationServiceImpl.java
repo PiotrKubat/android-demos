@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -14,13 +13,6 @@ import android.support.v4.content.ContextCompat;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.model.LatLng;
-import com.piotrkubat.lokalizator.R;
-import com.piotrkubat.lokalizator.places.Place;
-import com.piotrkubat.lokalizator.places.PlacesService;
-import com.piotrkubat.lokalizator.places.PlacesServiceImpl;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by piotrk on 23.11.15.
@@ -41,10 +33,6 @@ public class LocationServiceImpl implements LocationService {
 
     private LatLng currentPos;
 
-    private PlacesService placesService;
-
-    private String placeType = "";
-
     private static LocationService instance = null;
 
     public static LocationService getLocationService(LocationView view, Context context)     {
@@ -57,7 +45,6 @@ public class LocationServiceImpl implements LocationService {
     public LocationServiceImpl(LocationView view, Context context) {
         this.view = view;
         this.context = context;
-        placesService = new PlacesServiceImpl();
     }
 
     @Override
@@ -105,22 +92,6 @@ public class LocationServiceImpl implements LocationService {
 
     }
 
-    @Override
-    public void addPlaceType(String type) {
-        if(!placeType.equals(type)) {
-            placeType = type;
-            (new GetPlacesAsync()).execute(currentPos);
-        }
-    }
-
-    @Override
-    public void removePlaceType(String type) {
-//        if(placesTypesList.contains(type)) {
-//            placesTypesList.remove(type);
-//            (new GetPlacesAsync()).execute(currentPos);
-//        }
-    }
-
     private boolean checkPermissions() {
         if ( Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -151,47 +122,6 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void onProviderDisabled(String s) {
-
-    }
-
-    private class GetPlacesAsync extends AsyncTask<LatLng, Integer, List<Place>> {
-
-        @Override
-        protected List<Place> doInBackground(LatLng... latLngs) {
-            LatLng latLng = latLngs[0];
-            return placesService.getNearbyPlaces(latLng.latitude, latLng.longitude, 1000, placeType, "");
-        }
-
-        @Override
-        protected void onPostExecute(List<Place> places) {
-            super.onPostExecute(places);
-            if(places != null) {
-                view.clearMarkers();
-                for(Place place : places) {
-                    view.showLocationOnMap(new LatLng(place.getLangitude(), place.getLongitude()), place.getName(), getIcon(placeType));
-                }
-            }
-        }
-
-        private int getIcon(String type) {
-            if(type.equals("restaurant")) {
-                return R.drawable.ic_restaurant_menu_black_24dp;
-            }
-            if(type.equals("movie_theater")) {
-                return R.drawable.ic_local_movies_black_24dp;
-            }
-            if(type.equals("lodging")) {
-                return R.drawable.ic_local_hotel_black_24dp;
-            }
-            if(type.equals("cafe")) {
-                return R.drawable.ic_local_cafe_black_24dp;
-            }
-            if(type.equals("bank")) {
-                return R.drawable.ic_account_balance_black_24dp;
-
-            }
-            return -1;
-        }
 
     }
 }

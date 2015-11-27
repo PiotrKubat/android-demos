@@ -14,6 +14,7 @@ import android.view.View;
 import com.facebook.appevents.AppEventsLogger;
 import com.piotrkubat.lokalizator.gmap.LocationView;
 import com.piotrkubat.lokalizator.gmap.MapFragment;
+import com.piotrkubat.lokalizator.places.Place;
 
 public class MainActivity extends Activity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -82,39 +83,49 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
                 return true;
             case R.id.nav_banki:
                 if (!menuItem.isChecked()) {
-                    locationView.addPlaceType("bank");
+                    menuItem.setChecked(true);
+                    locationView.addPlaceType(Place.PlaceType.BANK);
                 } else {
-                    locationView.removePlaceType("bank");
+                    menuItem.setChecked(false);
+                    locationView.removePlaceType(Place.PlaceType.BANK);
                 }
                 return true;
             case R.id.nav_hotele:
                 if (!menuItem.isChecked()) {
-                    locationView.addPlaceType("lodging");
+                    menuItem.setChecked(true);
+                    locationView.addPlaceType(Place.PlaceType.LODGING);
                 } else {
-                    locationView.removePlaceType("lodging");
+                    menuItem.setChecked(false);
+                    locationView.removePlaceType(Place.PlaceType.LODGING);
                 }
                 return true;
 
             case R.id.nav_restauracje:
                 if (!menuItem.isChecked()) {
-                    locationView.addPlaceType("restaurant");
+                    menuItem.setChecked(true);
+                    locationView.addPlaceType(Place.PlaceType.RESTAURANT);
                 } else {
-                    locationView.removePlaceType("restaurant");
+                    menuItem.setChecked(false);
+                    locationView.removePlaceType(Place.PlaceType.RESTAURANT);
                 }
                 return true;
             case R.id.nav_kawiarnie:
                 if (!menuItem.isChecked()) {
-                    locationView.addPlaceType("cafe");
+                    menuItem.setChecked(true);
+                    locationView.addPlaceType(Place.PlaceType.CAFE);
                 } else {
-                    locationView.removePlaceType("cafe");
+                    menuItem.setChecked(false);
+                    locationView.removePlaceType(Place.PlaceType.CAFE);
                 }
                 return true;
 
             case R.id.nav_kina:
                 if (!menuItem.isChecked()) {
-                    locationView.addPlaceType("movie_theater");
+                    menuItem.setChecked(true);
+                    locationView.addPlaceType(Place.PlaceType.MOVIE_THEATER);
                 } else {
-                    locationView.removePlaceType("movie_theater");
+                    menuItem.setChecked(false);
+                    locationView.removePlaceType(Place.PlaceType.MOVIE_THEATER);
                 }
                 return true;
         }
